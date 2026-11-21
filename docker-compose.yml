@@ -1,0 +1,26 @@
+# Run everything:  docker compose up --build
+#   frontend: http://localhost:8080      API docs: http://localhost:8000/docs
+# Set GEMINI_API_KEY (and EVIDENCE_LLM_PROVIDER=gemini) in your shell or a .env file to use Gemini.
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      EVIDENCE_SECRET_KEY: ${EVIDENCE_SECRET_KEY:-}
+      EVIDENCE_DB_PATH: /data/evidence_trail.db
+      EVIDENCE_CORS_ORIGINS: http://localhost:8080
+      EVIDENCE_LLM_PROVIDER: ${EVIDENCE_LLM_PROVIDER:-none}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    volumes:
+      - evidence-data:/data
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports: ["8080:80"]
+    depends_on: [backend]
+
+volumes:
+  evidence-data:

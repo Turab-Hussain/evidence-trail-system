@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evidence-trail-system"
+version = "0.1.0"
+description = "AI-powered multi-channel requirements management with an evidence trail"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110",
+    "pydantic>=2.5",
+    "pypdf>=4.0",
+    "python-multipart>=0.0.9",
+    "uvicorn>=0.27",
+]
+
+[project.optional-dependencies]
+gemini = ["google-genai>=1.0"]
+anthropic = ["anthropic>=0.40"]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.4", "mypy>=1.8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+evidence_trail = ["repositories/schema.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "BLE"]
+ignore = ["S101"]  # asserts are used defensively and in tests
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["anthropic", "google", "google.*", "pypdf", "pypdf.*"]
+ignore_missing_imports = true  # optional dependencies
+follow_imports = "skip"

@@ -1,0 +1,15 @@
+{
+  "description": "Tiny synthetic, de-identified demo set. Replace with a real labelled benchmark.",
+  "messages": [
+    {"channel": "whatsapp", "sender": "client", "content": "We need a payment option with JazzCash. Also make the homepage premium."},
+    {"channel": "email", "sender": "client@example.com", "content": "Subject: Payments\n\nPlease add Bank Transfer payment. The site must load within 3 seconds."},
+    {"channel": "meeting_transcript", "sender": null, "content": "[10:02] Client: Users should be able to reset their password by email.\n[10:03] PM: Noted. Anything else?\n[10:04] Client: The site must load within 5 seconds."}
+  ],
+  "ground_truth": [
+    "payment option with JazzCash",
+    "make the homepage premium",
+    "add Bank Transfer payment",
+    "site must load within 3 seconds",
+    "users reset their password by email"
+  ]
+}
